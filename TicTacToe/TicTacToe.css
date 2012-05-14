@@ -1,0 +1,36 @@
+table
+{
+	border-collapse:collapse;
+}
+
+.e {
+	background-image: url('empty.png');
+}
+
+.p1 {
+	background-image: url('o.png');
+}
+
+.p2 {
+	background-image: url('x.png');
+}
+
+td {
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	width:100px;
+	height:100px;
+}
+
+tr[r='1'] {
+	border-style: solid none solid none;
+	border-width: 5px;
+	border-color: black;
+}
+
+td[c='1'] {
+	border-style: none solid none solid;
+	border-width: 5px;
+	border-color: black;
+}
