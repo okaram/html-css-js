@@ -7,15 +7,8 @@ function makeRGBA(r,g,b,a)
     return 'rgba('+r+','+g+','+b+','+a+')';
 }
 
-var owl=new Image();
-owl.src="owl.png"
-function draw()
+function drawRectangles(ctx)
 {
-
-    // get canvas
-    var cvs=document.getElementById('canvas');
-    var ctx=cvs.getContext('2d');
-
     var size=100;
     var alpha=0.15;
     for(var i=0; i<6; ++i) {
@@ -25,5 +18,44 @@ function draw()
 //        alpha+=0.2;
         console.log("size="+size+" alpha="+alpha);
     }
-    ctx.drawImage(owl,0,0);
+
+}
+//var owl=new Image();
+//owl.src="owl.png"
+
+var owl=new Object();
+owl.x=20
+owl.y=20
+
+owl.img=new Image();
+owl.img.src="owl.png";
+var ctx;
+
+function drawSprite(ctx, sprt)
+{
+    ctx.drawImage(sprt.img,sprt.x,sprt.y);
+}
+
+function draw()
+{
+
+    // get canvas
+    canvas=document.getElementById('canvas');
+    ctx=canvas.getContext('2d');
+    drawRectangles(ctx);
+    drawSprite(ctx,owl);
+}
+
+function keyPressed(event)
+{
+    if(event.keyCode==37) // <-
+        owl.x-=20;
+    else if (event.keyCode==38) // up
+        owl.y-=20;
+    else if (event.keyCode==39) // ->
+        owl.x+=20;
+    else if (event.keyCode==40) // down
+        owl.y+=20;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawSprite(ctx,owl);
 }
