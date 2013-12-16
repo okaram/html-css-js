@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> test</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="knockout-2.1.0.js"></script>
+	<script type="text/javascript" src="mymodel.js"></script>
+		
+	<script type="text/javascript">
+		$(document).ready(function() {
+			viewModel=new RegistrationViewModel();
+			ko.applyBindings(viewModel);
+
+			$('#f1').submit(function(event) {
+				console.log('submitting');
+				var s=ko.toJSON(viewModel,jsonRemoveFields);
+				$('#json').attr('value',s);
+				$('#f').submit();
+				console.log('submitted');
+				return false;
+			});
+
+		});
+
+	</script>
+</head>
+
+<h1>Davis Elementary's PTA Membership Form</h1>
+
+<h2>Account info</h2>
+<form id='f1' action='http://localhost:8000/davis/add_teacher'>
+<table>
+<tbody>
+<tr>
+	<td><label for='email'>Email (will be your username)</label></td>
+	<td><input type='email' name='email' id='email' data-bind='value: email' required></td>
+</tr>
+<tr>
+	<td><label for='password'>Password</label></td>
+	<td><input type='password' name='password' id='password' data-bind='value: password' required placeholder='8 or more chars'></td>
+</tr>
+<tr>
+	<td><label for='password2'>Repeat Password</label></td>
+	<td><input type='password' name='password2' id='password2' data-bind='value: password2' required placeholder='must match'></td>
+</tr>
+</tbody>
+</table>
+<h2>Household</h2>
+<table>
+<tbody>
+<tr>
+	<td><label for='hhname'>Household Last name</label></td>
+	<td><input type='text' name='hhname' id='hhname' data-bind='value: hhname' required></td>
+	<td><label for=''>Household Phone number</label></td>
+	<td><input type='text' name='phone' id='phone' data-bind='value: phone' placeholder='preferred number'></td>
+</tr>
+<tr>
+	<td><label for=''>Your Name</label></td>
+	<td><input type='text' name='name' id='name' data-bind='value: name' required></td>
+	<td><label for=''>Spouse's name</label></td>
+	<td><input type='text' name='spname' id='spname' data-bind='value: spname' placeholder='if appropriate'></td>
+</tr>
+<tr>
+	<td><label for=''>Stret Address</label></td>
+	<td><input type='text' name='address' id='address' data-bind='value: address' required></td>
+	<td><label for=''>Subdivision Name</label></td>
+	<td><input type='text' name='sdname' id='sdname' data-bind='value: sdname'></td>
+</tr>
+<tr>
+	<td><label for=''>City</label></td>
+	<td><input type='text' name='city' id='city' data-bind='value:city' required></td>
+	<td><label for=''>Zip code</label></td>
+	<td><input type='text' name='zip' id='zip' data-bind='value:zip' ></td>
+</tr>
+
+</tbody>
+</table>
+<h2>Children <button data-bind="click: addChild">Add Child</button></h2>
+
+<table>
+    <thead><tr>
+        <th>First name</th><th>Middle</th><th>Last</th><th>Grade</th><th>Teacher</th>
+    </tr></thead>
+    <!-- Todo: Generate table body -->
+    <tbody data-bind="foreach: children">
+    <tr>
+        <td><input required size='10' type="text" data-bind="value: fname" placeholder='first name'></td>
+        <td><input size='10' type="text" data-bind="value: mname" placeholder='middle or initial'></td>
+        <td><input size='10' type="text" data-bind="value: lname"></td>
+        <td><select data-bind='options: grades, value: grade'></select></td>
+        <td><select data-bind='options: teachers, optionsText: "name", value: teacher'></select></td>
+        <td><button data-bind='click: $root.removeChild'>Remove</button></td>
+        
+    </tr>  
+    </tbody>
+</table>
+
+<input type='submit'>
+</form>
+
+<form id="f" action='http://localhost:8000/davis/add_teacher' method='post'>
+	<input id='json' name='json' type='hidden' value=''>
+</form>
+
+
+</html>

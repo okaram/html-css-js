@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	
+<head><title>Playing with canvas</title></head>
+
+<body onload="init();" onkeydown="move(event)">
+<script language="javascript">
+	CanvasRenderingContext2D.prototype.clear = 
+		CanvasRenderingContext2D.prototype.clear || function (preserveTransform) {
+			if (preserveTransform) {
+				this.save();
+				this.setTransform(1, 0, 0, 1, 0, 0);
+			}
+
+			this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			if (preserveTransform) {
+				this.restore();
+			}           
+	};
+
+	function Player() {
+		var self=this;
+		self.img=new Image();
+		self.img.src='bob.png';
+		self.x=400;
+		return self;
+	}
+	
+	function FireBall(x,y) {
+		var self=this;
+		self.img=new Image();
+		self.img.src='fire_ball.png';
+		self.x=x;
+		self.y=y;
+		return self;
+	}
+	
+	var player=new Player();
+	var balls=[new FireBall(400,50), new FireBall(450,50)];
+	var ctx;
+	var w=800,h=400;
+	function init() {
+		ctx=document.getElementById('canvas').getContext('2d');
+		draw();
+	}
+	function draw() {
+		ctx.drawImage(player.img,player.x,355);
+		balls.forEach(function(ball) {ctx.drawImage(ball.img,ball.x,ball.y);});
+	}
+		
+	function move_player(dx) {
+			player.x+=dx;
+			ctx.clear();
+			draw();
+	}
+	function move(event) {
+		if(event.keyIdentifier=="Right")
+			move_player(10);
+		else if(event.keyIdentifier=="Left")
+			move_player(-10);	
+	}
+</script>
+	<canvas id='canvas' width='800' height='400' style='background-color:limegreen'>
+		Here go the animations !
+	</canvas>
+	
+</body>
+
+</body>
+</html>

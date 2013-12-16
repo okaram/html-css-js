@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<script>
+	function makePink(){ 
+		document.bgColor="pink";
+	}
+
+	function makeBlue(){ 
+		document.bgColor="#a0b0ff";
+	}
+
+	function changeBackground() {
+		document.bgColor=document.getElementById('bgColor').value;
+	}
+	
+	function changeParagraph() {
+		document.getElementById('p1').innerText='I just changed it !!';
+	}
+</script>
+
+</head>
+
+<body>
+<p>Something</p>
+
+<p id="p1">This paragraph has an id of 1</p>
+
+<input type="button" value="pink background" onClick="makePink()">
+<input type="button" value="blue background" onClick="makeBlue()">
+<br>
+<input type="text" id="bgColor" value="#00ff00">
+<input type="button" value="change background" onClick="changeBackground()">
+<br>
+<input type="button" value="change paragraph" onClick="changeParagraph()">
+
+</body>
+
+</html>

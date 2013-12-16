@@ -1,0 +1,6 @@
+# Robots.txt file from http://www.fccmarietta.org
+
+Sitemap: http://www.fccmarietta.org/sitemap.xml
+
+User-agent: *
+Disallow:

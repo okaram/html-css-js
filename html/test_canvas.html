@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	
+<head><title>Playing with canvas</title></head>
+
+<body onload="init();" onkeydown="move(event)">
+	<script language="javascript">
+	CanvasRenderingContext2D.prototype.clear = 
+		CanvasRenderingContext2D.prototype.clear || function (preserveTransform) {
+			if (preserveTransform) {
+				this.save();
+				this.setTransform(1, 0, 0, 1, 0, 0);
+			}
+
+			this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			if (preserveTransform) {
+				this.restore();
+			}           
+	};
+
+		var bob=new Image();
+		bob.src='bob.png';
+		var x=0,y=0;
+		var ctx;
+		function init() {
+			ctx=document.getElementById('canvas').getContext('2d');
+			draw();
+		}
+		function draw() {
+			ctx.drawImage(bob,x,y);
+		}
+		
+		function move_bob(dx,dy) {
+				x+=dx;
+				y+=dy;
+				ctx.clear();
+				draw();
+		}
+		function move(event) {
+			if(event.keyIdentifier==="Up")
+				move_bob(0,-10);
+			else if(event.keyIdentifier=="Down")
+				move_bob(0,10);
+			else if(event.keyIdentifier=="Right")
+				move_bob(10,0);
+			else if(event.keyIdentifier=="Left")
+				move_bob(-10,0);
+				
+		}
+	</script>
+	<canvas id='canvas' width='400' height='400' style='background-color:limegreen'>
+		Here go the animations !
+	</canvas>
+	
+</body>
+
+</body>
+</html>

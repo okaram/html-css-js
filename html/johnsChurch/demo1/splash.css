@@ -1,0 +1,18 @@
+.hex1 {
+	position: fixed;
+	left:50%;
+	width: 100px;
+	top: 10%;
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url('Hexagon.svg');
+	background-color: red;
+	display: block;
+}
+
+
+
+body {
+	background-image: url('Hexagon.svg');
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	
+<head><title>Canvas Transforms</title></head>
+
+<body onload="init();">
+<script language="javascript">
+	CanvasRenderingContext2D.prototype.clear = 
+		CanvasRenderingContext2D.prototype.clear || function (preserveTransform) {
+			if (preserveTransform) {
+				this.save();
+				this.setTransform(1, 0, 0, 1, 0, 0);
+			}
+
+			this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			if (preserveTransform) {
+				this.restore();
+			}           
+	};
+
+	
+	
+	function init() {
+		ctx=document.getElementById('canvas').getContext('2d');
+		draw();
+	}
+	function draw() {
+		var m11=document.getElementById('m11').value;
+		var m12=document.getElementById('m12').value;
+		var dx=document.getElementById('dx').value;
+		var m21=document.getElementById('m21').value;
+		var m22=document.getElementById('m22').value;
+		var dy=document.getElementById('dy').value;
+		
+		ctx.clear(true);
+		ctx.setTransform(200, 0, 0, 200, 100, 100);
+		ctx.transform(m11, m12, m21, m22, dx, dy);
+		ctx.fillStyle="#FF0000";
+		ctx.fillRect(0,0,1,1);
+	}
+		
+</script>
+	<canvas id='canvas' width='400' height='400' style='background-color:limegreen; border:2px solid'>
+		Here go the animations !
+	</canvas><br/>
+	<input type='text' size='5' id='m11' value='1.0'/> 
+	<input type='text' size='5' id='m12' value='0.0'/> 
+	<input type='text' size='5' id='dx' value='0.0'/> <br/>
+	
+	<input type='text' size='5' id='m21' value='0.0'/> 
+	<input type='text' size='5' id='m22' value='1.0'/> 
+	<input type='text' size='5' id='dy' value='0.0'/> 
+	<button onClick="draw()">Transform</button><br/>
+	 
+</body>
+
+</body>
+</html>

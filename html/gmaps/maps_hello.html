@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { position:relative; width:80%; height: 80%; float:left; z-index:-1; }
+      #left_bar { position:relative; left:0; width: 65px; float:left;}
+    </style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHAsps9DkpGMkluBVmUASOEHlPOssg1cI&sensor=true">
+    </script>
+    <script type="text/javascript">
+	var map;
+	var geocoder;
+	var map_canvas;
+	var markers=[];
+	function initialize() {
+        var mapOptions = {
+			center: new google.maps.LatLng(33.940458, -84.520354),
+			zoom: 18,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+		marker1=new google.maps.Marker({
+			position:new google.maps.LatLng(33.9405,-84.5203),
+			map: map,
+			icon: 'imgs/food.png',
+			title: 'Marker 1',
+			draggable: true		
+		});   
+		marker2	=new google.maps.Marker({
+			position:new google.maps.LatLng(33.9405,-84.5203),
+			map: map,
+			icon: 'imgs/food.png',
+			title: 'Marker 1',
+			draggable: true		
+		});   
+		geocoder = new google.maps.Geocoder();
+    }
+      
+      function doStuff() {
+		  alert('doing stuff');
+	  }
+	  
+	function goThere() {
+		var address=document.getElementById('addr').value;
+		
+		geocoder.geocode( { 'address': address}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+				var marker = new google.maps.Marker({
+					map: map,
+					position: results[0].geometry.location
+				});
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});
+
+	  }
+	function placeMarker(location, icon_src) {
+		var marker = new google.maps.Marker({
+			position: location, 
+			map: map,
+//			icon: icon_src,
+			draggable: true
+		});
+		markers.push(marker);
+	}
+
+	$(document).ready(function() {
+		initialize();
+		map_canvas=$('#map_canvas');
+		overlay = new google.maps.OverlayView();
+		overlay.draw = function() {};
+		overlay.setMap(map);
+
+/*
+		$("#draggable").draggable({helper: 'clone', cursorAt: {top:64, left:32},
+			stop: function(e) {
+				theEvent=e;
+				var point=new google.maps.Point(e.pageX-map_canvas.position().left,
+					e.pageY-map_canvas.position().top
+				);
+				var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
+//				var ll=map.getProjection().fromPointToLatLng(point);
+				placeMarker(ll, event.target.getAttribute('src'));
+				
+			}
+		});
+*/	});
+
+	  
+    </script>
+  </head>
+  <body>
+		<div>
+			Address: <input type="text" id="addr"> 		
+				<input type="button" value="go there" onClick="goThere()">
+		</div>
+		<div id="left_bar">
+			<table>
+				<tr>
+					<img id="icon1" src="imgs/food.png" class="draggable">
+				</tr>
+				<tr>
+					<img id="icon2" src="imgs/restrooms.png" class="draggable">
+				</tr>
+			</table>
+		</div>
+		<div id="map_canvas"></div>
+				
+  </body>
+</html
